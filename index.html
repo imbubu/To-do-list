@@ -1,0 +1,145 @@
+<html>
+<head>
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .input-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .input-group input {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .input-group button {
+            width: 18%;
+            background: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .input-group button:hover {
+            background: #218838;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        ul li {
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        ul li .actions {
+            display: flex;
+            gap: 10px;
+        }
+        ul li .actions .edit,
+        ul li .actions .delete {
+            cursor: pointer;
+            color: #007bff;
+        }
+        ul li .actions .delete {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <div class="input-group">
+            <input type="text" id="new-task" placeholder="Add a new task">
+            <button onclick="addTask()">Add</button>
+        </div>
+        <ul id="task-list">
+            <li>
+                <span>Sample Task 1</span>
+                <div class="actions">
+                    <i class="fas fa-edit edit" onclick="editTask(this)"></i>
+                    <i class="fas fa-trash delete" onclick="deleteTask(this)"></i>
+                </div>
+            </li>
+            <li>
+                <span>Sample Task 2</span>
+                <div class="actions">
+                    <i class="fas fa-edit edit" onclick="editTask(this)"></i>
+                    <i class="fas fa-trash delete" onclick="deleteTask(this)"></i>
+                </div>
+            </li>
+            <li>
+                <span>Sample Task 3</span>
+                <div class="actions">
+                    <i class="fas fa-edit edit" onclick="editTask(this)"></i>
+                    <i class="fas fa-trash delete" onclick="deleteTask(this)"></i>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        function addTask() {
+            const taskInput = document.getElementById('new-task');
+            const taskText = taskInput.value.trim();
+            if (taskText !== '') {
+                const taskList = document.getElementById('task-list');
+                const newTask = document.createElement('li');
+                newTask.innerHTML = `
+                    <span>${taskText}</span>
+                    <div class="actions">
+                        <i class="fas fa-edit edit" onclick="editTask(this)"></i>
+                        <i class="fas fa-trash delete" onclick="deleteTask(this)"></i>
+                    </div>
+                `;
+                taskList.appendChild(newTask);
+                taskInput.value = '';
+            }
+        }
+
+        function editTask(element) {
+            const taskItem = element.parentElement.parentElement;
+            const taskText = taskItem.querySelector('span').innerText;
+            const newTaskText = prompt('Edit Task', taskText);
+            if (newTaskText !== null && newTaskText.trim() !== '') {
+                taskItem.querySelector('span').innerText = newTaskText.trim();
+            }
+        }
+
+        function deleteTask(element) {
+            const taskItem = element.parentElement.parentElement;
+            taskItem.remove();
+        }
+    </script>
+</body>
+</html>
